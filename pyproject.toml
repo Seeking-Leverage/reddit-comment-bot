@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "reddit-comment-bot"
 version = "0.2.0"
-description = "Agency Reddit engagement bot for client growth marketing"
+description = "Open-source Reddit comment console for human-in-the-loop engagement"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [

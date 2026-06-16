@@ -15,7 +15,7 @@ console = Console()
 
 @click.group()
 def cli():
-    """Reddit comment bot — agency client engagement tool."""
+    """Reddit comment console — operator CLI."""
 
 
 @cli.command("list-clients")

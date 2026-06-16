@@ -1,82 +1,111 @@
-# Reddit Comment Bot
+# Reddit Comment Console
 
-Operator console + CLI for Reddit engagement. **Clone one repo per client** — fill in brand, playbooks, and credentials locally.
+Open-source operator tool for Reddit engagement: research subreddits, draft authentic comments with AI, review before posting, and track results.
 
-## What's included
+Built for growth marketers, founders, and agencies who want a **human-in-the-loop** workflow — not a blind auto-spam bot.
 
-| Layer | Purpose |
-|-------|---------|
-| **Web console** (`web/`) | Generator, brand profile, playbooks, campaign tracker |
-| **API** (`src/api/`) | FastAPI backend, JSON storage in `data/` |
-| **CLI** (`src/bot/`) | Optional automated scan + dry-run/post via Reddit API |
+```bash
+git clone https://github.com/Seeking-Leverage/reddit-comment-bot.git
+cd reddit-comment-bot
+./scripts/dev.sh
+# → http://localhost:5173
+```
+
+## The problem
+
+Posting on Reddit at scale is hard:
+
+- Every subreddit has different culture and rules
+- Generic AI comments get spotted and downvoted
+- Automation without review risks bans and brand damage
+- Hard to tie comments back to campaign results
+
+## What this does
+
+```
+Brand brief → Subreddit playbooks → Find a post → Generate draft → Human review → Post → Track
+```
+
+| Step | Tool |
+|------|------|
+| Set brand context | **Brand Profile** page |
+| Encode subreddit culture | **Playbooks** (tone, angles, dos/donts) |
+| Capture a live post | **Generator** — paste title + body |
+| Draft a comment | AI generation via any OpenAI-compatible API |
+| Review & post | Edit in UI, copy, post manually on Reddit |
+| Measure results | **Tracker** — upvotes, impressions, installs vs goals |
+
+Optional **CLI** can auto-scan subreddits and dry-run/post via the Reddit API.
 
 ## Quick start
 
-### 1. Python API
+### Prerequisites
+
+- Python 3.9+
+- Node.js 18+
+- An API key from any [OpenAI-compatible](#llm-providers) LLM provider
+
+### 1. Install
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -e .
 
 cp .env.example .env
-# Set LLM_API_KEY (any OpenAI-compatible provider)
+# Add LLM_API_KEY
 
-reddit-api
-# API → http://127.0.0.1:8000
+cd web && npm install && cd ..
 ```
 
-### 2. Web console
+### 2. Run
 
-**Dev (hot reload) — run both:**
+**Dev (hot reload):**
 ```bash
 ./scripts/dev.sh
-# UI → http://localhost:5173  ← open this URL
-# API → http://127.0.0.1:8000  (backend only, not the UI)
 ```
+Open **http://localhost:5173**
 
-Or manually:
+**Single URL (production-style):**
 ```bash
-reddit-api          # terminal 1
-cd web && npm run dev   # terminal 2 → http://localhost:5173
-```
-
-**Single URL (after build):**
-```bash
-cd web && npm run build
+cd web && npm run build && cd ..
 reddit-api
-# UI + API → http://127.0.0.1:8000
 ```
+Open **http://127.0.0.1:8000**
 
-### 3. Workflow
+### 3. First session
 
-1. **Brand** — product, company, expertise, campaign goals
-2. **Playbooks** — per-subreddit tone, angles, dos/donts
-3. **Generator** — paste a Reddit post → generate → edit → copy → post manually
-4. **Tracker** — log impressions, installs, upvotes vs goals
+1. **Brand** — fill product, expertise, campaign goals
+2. **Playbooks** — add target subreddits (e.g. `sidehustle`)
+3. **Generator** — paste a real Reddit post, generate, edit, copy
+4. **Tracker** — log metrics after posting
 
-Data is stored in `data/*.json` (one repo = one client).
+Data saves locally in `data/*.json`. Secrets stay in `.env` (never committed).
 
-## CLI (optional automation)
+## Fork per project
+
+Clone a fresh copy for each brand or campaign:
 
 ```bash
-cp config/clients/example-client.yaml config/clients/client.yaml
-reddit-bot validate client
-reddit-bot run client          # dry run
-reddit-bot run client --live
+git clone https://github.com/Seeking-Leverage/reddit-comment-bot.git acme-reddit
+cd acme-reddit
+# configure .env + brand/playbooks — no shared infra needed
 ```
 
-## Project structure
+## LLM providers
 
-```
-web/                 React console (Vite)
-src/api/             FastAPI routes + JSON storage
-src/bot/             Reddit scanner + CLI
-data/                brand.json, playbooks.json, history.json, tracker.json
-config/clients/      YAML for CLI automation only
-```
+Uses the OpenAI Python SDK against any **OpenAI-compatible** chat API:
 
-## API endpoints
+| Provider | `LLM_BASE_URL` | Example `LLM_MODEL` |
+|----------|----------------|---------------------|
+| OpenAI | *(unset)* | `gpt-4o-mini` |
+| OpenRouter | `https://openrouter.ai/api/v1` | `anthropic/claude-3-5-haiku` |
+| Groq | `https://api.groq.com/openai/v1` | `llama-3.3-70b-versatile` |
+| Azure OpenAI | your deployment URL | your deployment name |
+
+Legacy `OPENAI_*` env vars still work.
+
+## API
 
 | Method | Path | Description |
 |--------|------|-------------|
@@ -89,23 +118,55 @@ config/clients/      YAML for CLI automation only
 | PUT | `/api/tracker/goals` | Campaign goals |
 | POST | `/api/tracker/entries` | Log metrics |
 
-## LLM providers
+## CLI (optional)
 
-Uses the OpenAI Python SDK against any **OpenAI-compatible** chat API. Configure via `.env`:
-
-| Provider | `LLM_BASE_URL` | Example `LLM_MODEL` |
-|----------|----------------|---------------------|
-| OpenAI | *(unset)* | `gpt-4o-mini` |
-| OpenRouter | `https://openrouter.ai/api/v1` | `anthropic/claude-3-5-haiku` |
-| Groq | `https://api.groq.com/openai/v1` | `llama-3.3-70b-versatile` |
-| Azure OpenAI | your deployment URL | your deployment name |
-
-`OPENAI_*` env vars still work for older clones.
-
-## New client setup
+For automated subreddit scanning and dry-run/live posting:
 
 ```bash
-git clone <this-repo> client-acme
-cd client-acme
-# Fill .env, run API + web, configure brand + playbooks in UI
+cp config/clients/example-client.yaml config/clients/my-project.yaml
+# Add Reddit script-app credentials
+
+reddit-bot validate my-project
+reddit-bot run my-project           # dry run
+reddit-bot run my-project --live    # posts for real
 ```
+
+Requires a [Reddit script app](https://www.reddit.com/prefs/apps).
+
+## Project structure
+
+```
+web/                 React console (Vite + TypeScript)
+src/api/             FastAPI backend + JSON storage
+src/bot/             Reddit scanner + CLI
+data/                Local data (gitignored)
+config/clients/      YAML for CLI only
+scripts/dev.sh       Start API + web together
+```
+
+## Known limitations
+
+- **Human posting only** — the web UI does not auto-post to Reddit
+- **`promo_level` in playbooks** — stored in UI, not yet wired to generation prompts
+- **Brand product/competitors** — saved but not yet fed to the LLM (company name is used for safety checks only)
+- **Tracker** — manual metric entry; no AppsFlyer/Reddit API integration yet
+- **No API auth** — intended for localhost; add auth before exposing publicly
+- **Dual config** — web uses `data/*.json`, CLI uses `config/clients/*.yaml` (not synced)
+
+Contributions welcome on all of the above.
+
+## Responsible use
+
+Reddit engagement must be authentic and transparent. Before using this tool:
+
+1. Read Reddit's [Responsible Builder Policy](https://support.reddithelp.com/hc/en-us/articles/42728983564564-Responsible-Builder-Policy) and [API terms](https://support.reddithelp.com/hc/en-us/articles/16160319875092-Reddit-Data-API-Wiki)
+2. **Always review** generated comments before posting
+3. Start with low volume; never misrepresent who you are
+4. Disclose affiliations when mentioning your product
+5. Respect subreddit rules and moderators
+
+This project is a drafting and workflow tool. You are responsible for how it is used.
+
+## License
+
+[MIT](LICENSE)
