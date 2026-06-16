@@ -1,0 +1,56 @@
+client_id: example-client
+client_name: Example Client
+industry: B2B SaaS / marketing analytics
+expertise_summary: >
+  Attribution modeling, growth experiments, and how mid-market SaaS
+  teams measure channel ROI. Practitioner voice, not a vendor.
+
+dry_run: true
+
+reddit_account:
+  username: your_reddit_username
+  client_id: your_reddit_app_client_id
+  client_secret: your_reddit_app_client_secret
+  password: your_reddit_account_password
+  user_agent: "reddit-comment-bot/0.2 by u/your_reddit_username"
+
+focus_areas:
+  - name: Growth marketing
+    description: Experimentation, channel mix, and scaling paid + organic
+    subreddits:
+      - marketing
+      - growthhacking
+      - PPC
+    keywords:
+      - attribution
+      - CAC
+      - experiment
+
+  - name: SaaS operations
+    description: Running and growing a SaaS business day-to-day
+    subreddits:
+      - SaaS
+      - startups
+    keywords:
+      - churn
+      - pricing
+
+subreddit_notes:
+  marketing: Skeptical of vendors. Specific numbers and war stories win.
+  SaaS: Founders want blunt advice with real examples. No fluff.
+
+engagement:
+  max_comments_per_run: 2
+  max_comments_per_day: 10
+  min_post_score: 1
+  max_post_age_hours: 4
+  post_sort: rising
+  reply_to_top_comments: true
+  max_top_comments_to_consider: 3
+  min_seconds_between_comments: 600
+
+voice:
+  tone: data-driven   # funny | data-driven | direct
+  max_chars: 400
+  min_chars: 40
+  max_retries: 1      # 1 retry = 2 LLM calls max per comment

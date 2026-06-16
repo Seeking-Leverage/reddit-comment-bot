@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=69.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "reddit-comment-bot"
+version = "0.2.0"
+description = "Agency Reddit engagement bot for client growth marketing"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "praw>=7.7.1",
+    "openai>=1.30.0",
+    "pydantic>=2.7.0",
+    "pydantic-settings>=2.3.0",
+    "python-dotenv>=1.0.1",
+    "sqlalchemy>=2.0.30",
+    "click>=8.1.7",
+    "rich>=13.7.1",
+    "tenacity>=8.3.0",
+    "PyYAML>=6.0.1",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+]
+
+[project.scripts]
+reddit-bot = "bot.cli:cli"
+reddit-api = "api.main:run"
+
+[tool.setuptools.packages.find]
+where = ["src"]

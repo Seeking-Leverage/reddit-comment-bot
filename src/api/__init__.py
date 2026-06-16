@@ -1,0 +1,1 @@
+"""FastAPI console for the Reddit comment bot."""
