@@ -8,6 +8,7 @@ export default function GeneratorPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [parentComment, setParentComment] = useState("");
+  const [postUrl, setPostUrl] = useState("");
   const [draft, setDraft] = useState("");
   const [playbook, setPlaybook] = useState<PlaybookEntry | null>(null);
   const [loading, setLoading] = useState(false);
@@ -67,7 +68,7 @@ export default function GeneratorPage() {
       generated_comment: draft,
       final_comment: draft,
       status,
-      post_url: "",
+      post_url: postUrl.trim(),
     });
     setMeta(`Saved to history (${status}) — view in History`);
   }
@@ -94,6 +95,14 @@ export default function GeneratorPage() {
               Playbook loaded: tone={playbook.tone}, promo={playbook.promo_level}
             </p>
           )}
+
+          <label>Post URL</label>
+          <input
+            value={postUrl}
+            onChange={(e) => setPostUrl(e.target.value)}
+            placeholder="https://www.reddit.com/r/sidehustle/comments/..."
+            type="url"
+          />
 
           <label>Post title</label>
           <input

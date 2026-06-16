@@ -80,7 +80,24 @@ export default function HistoryPage() {
                 </span>
               </div>
 
-              <p style={{ margin: "0 0 0.75rem", fontWeight: 600 }}>{entry.title}</p>
+              <p style={{ margin: "0 0 0.35rem", fontWeight: 600 }}>{entry.title}</p>
+
+              <div style={{ margin: "0 0 0.75rem" }}>
+                {entry.post_url ? (
+                  <>
+                    <a href={entry.post_url} target="_blank" rel="noreferrer">
+                      View on Reddit →
+                    </a>
+                    {isOpen && (
+                      <p className="muted" style={{ margin: "0.35rem 0 0", fontSize: "0.8rem" }}>
+                        {entry.post_url}
+                      </p>
+                    )}
+                  </>
+                ) : (
+                  <span className="muted">No post URL saved</span>
+                )}
+              </div>
 
               {entry.description.trim() && (
                 <div style={{ marginBottom: "0.75rem" }}>
@@ -119,14 +136,6 @@ export default function HistoryPage() {
                 </div>
                 <p style={{ margin: 0, whiteSpace: "pre-wrap" }}>{ourComment}</p>
               </div>
-
-              {entry.post_url && (
-                <p className="muted" style={{ margin: "0 0 0.75rem" }}>
-                  <a href={entry.post_url} target="_blank" rel="noreferrer">
-                    {entry.post_url}
-                  </a>
-                </p>
-              )}
 
               <button
                 type="button"
