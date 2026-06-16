@@ -65,8 +65,8 @@ class HistoryCreate(BaseModel):
 
 
 class TrackerGoals(BaseModel):
+    goal_upvotes: int = 100
     goal_impressions: int = 2000
-    goal_installs: int = 20
 
 
 class TrackerEntry(BaseModel):
@@ -77,7 +77,6 @@ class TrackerEntry(BaseModel):
     subreddit: str = ""
     upvotes: int = 0
     impressions: int = 0
-    installs: int = 0
     notes: str = ""
 
 
@@ -87,11 +86,15 @@ class TrackerEntryCreate(BaseModel):
     subreddit: str = ""
     upvotes: int = 0
     impressions: int = 0
-    installs: int = 0
     notes: str = ""
+
+
+class TrackerTotals(BaseModel):
+    upvotes: int = 0
+    impressions: int = 0
 
 
 class TrackerSummary(BaseModel):
     goals: TrackerGoals
-    totals: TrackerGoals
+    totals: TrackerTotals
     entries: List[TrackerEntry]

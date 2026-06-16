@@ -65,7 +65,6 @@ export const api = {
     subreddit?: string;
     upvotes?: number;
     impressions?: number;
-    installs?: number;
     notes?: string;
   }) =>
     request<TrackerEntry>("/api/tracker/entries", {

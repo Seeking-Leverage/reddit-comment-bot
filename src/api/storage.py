@@ -94,7 +94,9 @@ class DataStore:
 
     def get_tracker_goals(self) -> TrackerGoals:
         raw = _read_json(self._tracker_path, {})
-        goals = raw.get("goals", {})
+        goals = dict(raw.get("goals", {}))
+        goals.pop("goal_installs", None)
+        goals.setdefault("goal_upvotes", 100)
         return TrackerGoals.model_validate(goals)
 
     def save_tracker_goals(self, goals: TrackerGoals) -> TrackerGoals:
@@ -105,7 +107,11 @@ class DataStore:
 
     def list_tracker_entries(self) -> List[TrackerEntry]:
         raw = _read_json(self._tracker_path, {"goals": {}, "entries": []})
-        return [TrackerEntry.model_validate(item) for item in raw.get("entries", [])]
+        entries = []
+        for item in raw.get("entries", []):
+            cleaned = {k: v for k, v in item.items() if k != "installs"}
+            entries.append(TrackerEntry.model_validate(cleaned))
+        return entries
 
     def add_tracker_entry(self, data: TrackerEntryCreate) -> TrackerEntry:
         entry = TrackerEntry(

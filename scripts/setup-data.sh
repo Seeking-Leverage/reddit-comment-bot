@@ -25,8 +25,8 @@ if [[ ! -f "$DATA/tracker.json" ]]; then
   cat > "$DATA/tracker.json" <<'EOF'
 {
   "goals": {
-    "goal_impressions": 2000,
-    "goal_installs": 20
+    "goal_upvotes": 100,
+    "goal_impressions": 2000
   },
   "entries": []
 }

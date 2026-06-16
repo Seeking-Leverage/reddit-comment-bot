@@ -35,7 +35,7 @@ Brand brief → Subreddit playbooks → Find a post → Generate draft → Human
 | Capture a live post | **Generator** — paste title + body |
 | Draft a comment | AI generation via any OpenAI-compatible API |
 | Review & post | Edit in UI, copy, post manually on Reddit |
-| Measure results | **Tracker** — upvotes, impressions, installs vs goals |
+| Measure results | **Tracker** — manual Reddit upvotes + impressions vs goals |
 
 Optional **CLI** can auto-scan subreddits and dry-run/post via the Reddit API.
 
@@ -82,8 +82,8 @@ Open **http://127.0.0.1:8000**
 1. **Brand** — fill product, expertise, campaign goals (or run `./scripts/setup-data.sh`)
 2. **Playbooks** — add target subreddits (e.g. `sidehustle`)
 3. **Generator** — paste a real Reddit post, generate, edit, copy
-4. **History** — review saved drafts and posted comments
-5. **Tracker** — log metrics after posting
+4. **History** — review posts, reply threads, and your comments
+5. **Tracker** — log Reddit upvotes and impressions (manual, no analytics SDK)
 
 Data saves locally in `data/*.json`. Secrets stay in `.env` (never committed).
 
@@ -152,7 +152,7 @@ scripts/dev.sh       Start API + web together
 ## Known limitations
 
 - **Human posting only** — the web UI does not auto-post to Reddit
-- **Tracker** — manual metric entry; no AppsFlyer/Reddit API integration yet
+- **Tracker** — manual Reddit metrics only; no analytics SDK integration
 - **No API auth** — intended for localhost; add auth before exposing publicly
 - **Dual config** — web uses `data/*.json`, CLI uses `config/clients/*.yaml` (not synced)
 

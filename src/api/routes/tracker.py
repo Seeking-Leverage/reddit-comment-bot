@@ -5,6 +5,7 @@ from api.schemas import (
     TrackerEntryCreate,
     TrackerGoals,
     TrackerSummary,
+    TrackerTotals,
 )
 from api.storage import DataStore
 
@@ -16,9 +17,9 @@ store = DataStore()
 def get_tracker():
     goals = store.get_tracker_goals()
     entries = store.list_tracker_entries()
-    totals = TrackerGoals(
-        goal_impressions=sum(e.impressions for e in entries),
-        goal_installs=sum(e.installs for e in entries),
+    totals = TrackerTotals(
+        upvotes=sum(e.upvotes for e in entries),
+        impressions=sum(e.impressions for e in entries),
     )
     return TrackerSummary(goals=goals, totals=totals, entries=entries)
 

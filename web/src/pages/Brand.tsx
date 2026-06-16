@@ -75,7 +75,7 @@ export default function BrandPage() {
           <textarea
             value={brand.goals}
             onChange={(e) => setBrand({ ...brand, goals: e.target.value })}
-            placeholder="e.g. 2,000 impressions and 20 installs over 2 weeks"
+            placeholder="e.g. 2,000 impressions and strong thread engagement over 2 weeks"
           />
 
           <button type="submit">Save profile</button>

@@ -42,8 +42,13 @@ export interface HistoryEntry {
 }
 
 export interface TrackerGoals {
+  goal_upvotes: number;
   goal_impressions: number;
-  goal_installs: number;
+}
+
+export interface TrackerTotals {
+  upvotes: number;
+  impressions: number;
 }
 
 export interface TrackerEntry {
@@ -54,12 +59,11 @@ export interface TrackerEntry {
   subreddit: string;
   upvotes: number;
   impressions: number;
-  installs: number;
   notes: string;
 }
 
 export interface TrackerSummary {
   goals: TrackerGoals;
-  totals: TrackerGoals;
+  totals: TrackerTotals;
   entries: TrackerEntry[];
 }

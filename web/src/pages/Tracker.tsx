@@ -5,15 +5,14 @@ import type { TrackerGoals, TrackerSummary } from "../types";
 export default function TrackerPage() {
   const [data, setData] = useState<TrackerSummary | null>(null);
   const [goals, setGoals] = useState<TrackerGoals>({
+    goal_upvotes: 100,
     goal_impressions: 2000,
-    goal_installs: 20,
   });
   const [form, setForm] = useState({
     subreddit: "",
     post_url: "",
     upvotes: 0,
     impressions: 0,
-    installs: 0,
     notes: "",
   });
   const [status, setStatus] = useState("");
@@ -43,7 +42,6 @@ export default function TrackerPage() {
       post_url: "",
       upvotes: 0,
       impressions: 0,
-      installs: 0,
       notes: "",
     });
     await load();
@@ -52,52 +50,54 @@ export default function TrackerPage() {
 
   if (!data) return <p className="muted">Loading…</p>;
 
+  const upvotePct = Math.min(
+    100,
+    Math.round((data.totals.upvotes / data.goals.goal_upvotes) * 100) || 0
+  );
   const impPct = Math.min(
     100,
-    Math.round((data.totals.goal_impressions / data.goals.goal_impressions) * 100) || 0
-  );
-  const instPct = Math.min(
-    100,
-    Math.round((data.totals.goal_installs / data.goals.goal_installs) * 100) || 0
+    Math.round((data.totals.impressions / data.goals.goal_impressions) * 100) || 0
   );
 
   return (
     <div className="page">
       <h2>Campaign Tracker</h2>
-      <p className="subtitle">Log impressions and installs against your test goals.</p>
+      <p className="subtitle">
+        Log Reddit upvotes and impressions manually. No third-party analytics integration.
+      </p>
 
       <div className="stat-grid">
         <div className="stat">
           <div className="value">
-            {data.totals.goal_impressions} / {data.goals.goal_impressions}
+            {data.totals.upvotes} / {data.goals.goal_upvotes}
           </div>
-          <div className="label">Impressions ({impPct}%)</div>
+          <div className="label">Upvotes ({upvotePct}%)</div>
         </div>
         <div className="stat">
           <div className="value">
-            {data.totals.goal_installs} / {data.goals.goal_installs}
+            {data.totals.impressions} / {data.goals.goal_impressions}
           </div>
-          <div className="label">Installs ({instPct}%)</div>
+          <div className="label">Impressions ({impPct}%)</div>
         </div>
       </div>
 
       <form onSubmit={handleSaveGoals}>
         <div className="card">
           <h3 style={{ marginTop: 0 }}>Goals</h3>
+          <label>Target upvotes</label>
+          <input
+            type="number"
+            value={goals.goal_upvotes}
+            onChange={(e) =>
+              setGoals({ ...goals, goal_upvotes: Number(e.target.value) })
+            }
+          />
           <label>Target impressions</label>
           <input
             type="number"
             value={goals.goal_impressions}
             onChange={(e) =>
               setGoals({ ...goals, goal_impressions: Number(e.target.value) })
-            }
-          />
-          <label>Target installs</label>
-          <input
-            type="number"
-            value={goals.goal_installs}
-            onChange={(e) =>
-              setGoals({ ...goals, goal_installs: Number(e.target.value) })
             }
           />
           <button type="submit">Save goals</button>
@@ -123,19 +123,13 @@ export default function TrackerPage() {
             value={form.upvotes}
             onChange={(e) => setForm({ ...form, upvotes: Number(e.target.value) })}
           />
-          <label>Impressions</label>
+          <label>Impressions (if visible on Reddit)</label>
           <input
             type="number"
             value={form.impressions}
             onChange={(e) =>
               setForm({ ...form, impressions: Number(e.target.value) })
             }
-          />
-          <label>Installs</label>
-          <input
-            type="number"
-            value={form.installs}
-            onChange={(e) => setForm({ ...form, installs: Number(e.target.value) })}
           />
           <label>Notes</label>
           <textarea
@@ -149,7 +143,7 @@ export default function TrackerPage() {
       {status && <p className="success">{status}</p>}
 
       <div className="card">
-        <h3 style={{ marginTop: 0 }}>History</h3>
+        <h3 style={{ marginTop: 0 }}>Logged metrics</h3>
         {data.entries.length === 0 ? (
           <p className="muted">No entries yet.</p>
         ) : (
@@ -160,7 +154,6 @@ export default function TrackerPage() {
                 <th>Sub</th>
                 <th>Upvotes</th>
                 <th>Impressions</th>
-                <th>Installs</th>
                 <th>Notes</th>
               </tr>
             </thead>
@@ -171,7 +164,6 @@ export default function TrackerPage() {
                   <td>r/{entry.subreddit}</td>
                   <td>{entry.upvotes}</td>
                   <td>{entry.impressions}</td>
-                  <td>{entry.installs}</td>
                   <td>{entry.notes}</td>
                 </tr>
               ))}
