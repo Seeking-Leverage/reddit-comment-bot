@@ -4,6 +4,8 @@ Open-source operator tool for Reddit engagement: research subreddits, draft auth
 
 Built for growth marketers, founders, and agencies who want a **human-in-the-loop** workflow — not a blind auto-spam bot.
 
+![Comment Generator](docs/screenshots/generator.png)
+
 ```bash
 git clone https://github.com/Seeking-Leverage/reddit-comment-bot.git
 cd reddit-comment-bot
@@ -55,6 +57,8 @@ pip install -e .
 cp .env.example .env
 # Add LLM_API_KEY
 
+./scripts/setup-data.sh   # optional: seed brand + playbooks examples
+
 cd web && npm install && cd ..
 ```
 
@@ -75,10 +79,11 @@ Open **http://127.0.0.1:8000**
 
 ### 3. First session
 
-1. **Brand** — fill product, expertise, campaign goals
+1. **Brand** — fill product, expertise, campaign goals (or run `./scripts/setup-data.sh`)
 2. **Playbooks** — add target subreddits (e.g. `sidehustle`)
 3. **Generator** — paste a real Reddit post, generate, edit, copy
-4. **Tracker** — log metrics after posting
+4. **History** — review saved drafts and posted comments
+5. **Tracker** — log metrics after posting
 
 Data saves locally in `data/*.json`. Secrets stay in `.env` (never committed).
 
@@ -147,13 +152,11 @@ scripts/dev.sh       Start API + web together
 ## Known limitations
 
 - **Human posting only** — the web UI does not auto-post to Reddit
-- **`promo_level` in playbooks** — stored in UI, not yet wired to generation prompts
-- **Brand product/competitors** — saved but not yet fed to the LLM (company name is used for safety checks only)
 - **Tracker** — manual metric entry; no AppsFlyer/Reddit API integration yet
 - **No API auth** — intended for localhost; add auth before exposing publicly
 - **Dual config** — web uses `data/*.json`, CLI uses `config/clients/*.yaml` (not synced)
 
-Contributions welcome on all of the above.
+See [CONTRIBUTING.md](CONTRIBUTING.md) to help improve any of the above.
 
 ## Responsible use
 
@@ -166,6 +169,10 @@ Reddit engagement must be authentic and transparent. Before using this tool:
 5. Respect subreddit rules and moderators
 
 This project is a drafting and workflow tool. You are responsible for how it is used.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Run `pytest -q` and `cd web && npm run build` before opening a PR.
 
 ## License
 

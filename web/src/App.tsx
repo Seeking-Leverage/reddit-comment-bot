@@ -3,6 +3,7 @@ import Layout from "./components/Layout";
 import BrandPage from "./pages/Brand";
 import GeneratorPage from "./pages/Generator";
 import PlaybooksPage from "./pages/Playbooks";
+import HistoryPage from "./pages/History";
 import TrackerPage from "./pages/Tracker";
 
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
         <Route index element={<GeneratorPage />} />
         <Route path="brand" element={<BrandPage />} />
         <Route path="playbooks" element={<PlaybooksPage />} />
+        <Route path="history" element={<HistoryPage />} />
         <Route path="tracker" element={<TrackerPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>

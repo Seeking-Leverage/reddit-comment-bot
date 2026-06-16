@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { api } from "../api/client";
 import type { PlaybookEntry } from "../types";
 
@@ -68,7 +69,7 @@ export default function GeneratorPage() {
       status,
       post_url: "",
     });
-    setMeta(`Saved to history (${status})`);
+    setMeta(`Saved to history (${status}) — view in History`);
   }
 
   return (
@@ -121,7 +122,12 @@ export default function GeneratorPage() {
       </form>
 
       {error && <p className="error">{error}</p>}
-      {meta && <p className="success">{meta}</p>}
+      {meta && (
+        <p className="success">
+          {meta}{" "}
+          <Link to="/history">Open History →</Link>
+        </p>
+      )}
 
       <div className="card">
         <label>Draft (edit before posting)</label>

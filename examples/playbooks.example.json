@@ -1,0 +1,36 @@
+[
+  {
+    "subreddit": "sidehustle",
+    "summary": "Practical earners sharing real numbers. Skeptical of vague advice and course spam.",
+    "tone": "data-driven",
+    "promo_level": "none",
+    "angles": [
+      "Share a specific $/hour number from experience",
+      "Call out a common side hustle myth",
+      "Short war story about a payout that wasn't worth it"
+    ],
+    "dos_donts": "Do: be specific, mention tradeoffs. Don't: pitch apps, drop links, or sound like a guru."
+  },
+  {
+    "subreddit": "beermoney",
+    "summary": "Deal hunters and micro-earners. Upvote specific payout proof and contrarian takes.",
+    "tone": "direct",
+    "promo_level": "none",
+    "angles": [
+      "Blunt take on which offers aren't worth the time",
+      "Compare two gigs with real hourly math"
+    ],
+    "dos_donts": "Don't hype. Don't post referral codes."
+  },
+  {
+    "subreddit": "gigwork",
+    "summary": "Drivers and delivery workers venting about pay. Want lived experience, not theory.",
+    "tone": "direct",
+    "promo_level": "none",
+    "angles": [
+      "Share how gas/mileage changed the real hourly rate",
+      "Mention a market-specific pattern you've seen"
+    ],
+    "dos_donts": "Do: talk like a worker. Don't: sound corporate."
+  }
+]

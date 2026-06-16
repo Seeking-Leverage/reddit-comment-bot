@@ -27,5 +27,11 @@ dependencies = [
 reddit-bot = "bot.cli:cli"
 reddit-api = "api.main:run"
 
+[project.optional-dependencies]
+dev = ["pytest>=8.0.0", "httpx>=0.27.0"]
+
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

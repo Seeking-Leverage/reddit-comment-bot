@@ -19,6 +19,8 @@ def generate_comment(req: GenerateCommentRequest):
     tone = playbook.tone if playbook else "data-driven"
     note = playbook_note(playbook) if playbook else ""
 
+    promo_level = playbook.promo_level if playbook else "none"
+
     ctx = CommentContext(
         title=req.title[:500],
         subreddit=req.subreddit,
@@ -29,6 +31,10 @@ def generate_comment(req: GenerateCommentRequest):
         expertise=brand.expertise_summary,
         subreddit_note=note,
         tone=tone,
+        promo_level=promo_level,
+        product=brand.product,
+        company=brand.company,
+        competitors=brand.competitors,
         client_name=brand.company,
         max_chars=400,
         min_chars=40,

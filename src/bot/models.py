@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from typing import List, Literal, Optional
 
 Tone = Literal["funny", "data-driven", "direct"]
+PromoLevel = Literal["none", "low", "moderate"]
 
 
 @dataclass(frozen=True)
@@ -16,6 +17,10 @@ class CommentContext:
     expertise: str = ""
     subreddit_note: str = ""
     tone: Tone = "data-driven"
+    promo_level: PromoLevel = "none"
+    product: str = ""
+    company: str = ""
+    competitors: str = ""
     client_name: str = ""
     max_chars: int = 400
     min_chars: int = 40

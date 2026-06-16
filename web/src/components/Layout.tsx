@@ -4,6 +4,7 @@ const links = [
   { to: "/", label: "Generator" },
   { to: "/brand", label: "Brand Profile" },
   { to: "/playbooks", label: "Playbooks" },
+  { to: "/history", label: "History" },
   { to: "/tracker", label: "Tracker" },
 ];
 
